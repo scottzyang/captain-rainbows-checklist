@@ -1,4 +1,5 @@
 checklist = list() #creates a list object in memory that we can refer back to
+from operator import index
 import os # to utilize os.system('clear') to clear terminal after user input
 
 # Remaining Tasks
@@ -54,6 +55,7 @@ def select(function_code):
             else:
                 read(item_index)
                 index_exist = False
+                os.system('clear') 
         return True
     # print all items
     elif function_code.lower()  == "p":
@@ -65,7 +67,7 @@ def select(function_code):
         return False
     # update item from list
     elif function_code.lower() == "u":
-        input_index = int(user_input("What index would like to update? "))
+        input_index = int(user_input("What index would you like to update? "))
         input_item = user_input("What would you like to change it to? ")
         update(input_index, input_item)
         os.system('clear') 
@@ -78,8 +80,14 @@ def select(function_code):
         return True
     # mark items as completed
     elif function_code.lower() == "m":
-        input_selection = int(user_input("Which item would element would you like to mark completed? "))
-        mark_completed(input_selection)
+        index_exist = True
+        while (index_exist == True):
+            input_selection = int(user_input("Which item would element would you like to mark completed? "))
+            if input_selection not in range(0, len(checklist)):
+                print("Item does not exist within checklist, please try again.")
+            else:
+                mark_completed(input_selection)
+                index_exist = False
         return True
     #catch all 
     else:
